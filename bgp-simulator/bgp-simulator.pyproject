@@ -1,0 +1,3 @@
+{
+    "files": ["mainwindow.py","images/house.png","images/pc.png","form.ui","images/car.png","images/boat.png","images/router.png","drag_widget.py","ui_form.py","device.py"]
+}
