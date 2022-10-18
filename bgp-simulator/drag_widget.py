@@ -13,7 +13,6 @@ from device import Device
 
 
 class DragWidget(QFrame):
-
     def _createIcon(self, x, y, image, parent) :
         newPixmap = QPixmap(image)
         newIcon = Device(parent, x, y, newPixmap)
@@ -22,10 +21,18 @@ class DragWidget(QFrame):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.setMinimumSize(200, 200)
+        self.currentSelection = None
         self.setFrameStyle(QFrame.Sunken | QFrame.StyledPanel)
         self.setAcceptDrops(True)
         self._createIcon(10, 10, 'images/pc.png', self)
+
+    def setCurrentSelection(self, device):
+        if self.currentSelection is not device :
+            if self.currentSelection is not None:
+                self.currentSelection.setSelected(False)
+            self.currentSelection = device
+            if self.currentSelection is not None:
+                self.currentSelection.setSelected(True)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasFormat("application/x-dnditemdata") :
@@ -57,11 +64,13 @@ class DragWidget(QFrame):
 
             newPoint = event.position().toPoint() - offset
             newIcon = Device(self, newPoint.x(), newPoint.y(), pixmap)
+            self.setCurrentSelection(newIcon)
+            newIcon.show()
 #            newIcon = QLabel(self)
 #            newIcon.setPixmap(pixmap)
 #            newPoint = event.position().toPoint() - offset
 #            newIcon.move(newPoint.x(), newPoint.y())
-            newIcon.show()
+
 #            newIcon.setAttribute(Qt.WA_DeleteOnClose)
 
             if event.source() == self :
@@ -73,12 +82,16 @@ class DragWidget(QFrame):
             event.ignore()
     def mousePressEvent(self, event):
         child = self.childAt(event.position().toPoint())
+
+        self.setCurrentSelection(child)
+
         if not child or not child.pixmap() :
             return
         pixmap = child.pixmap()
         itemData = QByteArray()
         dataStream = QDataStream(itemData, QIODevice.WriteOnly)
         dataStream << pixmap << QPoint(event.position().toPoint() - child.pos())
+
 
         tempPixmap = QPixmap(pixmap)
         painter = QPainter()
@@ -104,10 +117,11 @@ class DragBar(DragWidget) :
 
     def __init__(self, parent) :
         super().__init__(parent)
+        self.setMinimumSize(80,100)
         self.setStyleSheet(u"background: rgb(145, 155, 155)")
         self.setAcceptDrops(False)
         self._createIcon(10, 10, 'images/pc.png', self)
-        self._createIcon(130, 10, 'images/router.png', self)
+        self._createIcon(120, 10, 'images/router.png', self)
 
     def mousePressEvent(self, event):
         child = self.childAt(event.position().toPoint())
