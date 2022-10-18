@@ -12,11 +12,16 @@ class Device(QtWidgets.QLabel):
         borderWidth = 2
         self.setMinimumSize(iconSize + borderWidth, iconSize + borderWidth)
         self.setPixmap(pixmap)
-#        self.setFrameShape(QtWidgets.QFrame.Panel)
-        self.setLineWidth(3)
         self.move(x,y)
-#        self.frame.move(x,y)
-#        self.label.move(x,y)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-#        self.label.setStyleSheet("background-color: transparent;")
-#        self.frame.setStyleSheet('border-color: black;')
+        self.activeStyle = ".Device { border: 2px solid #1DDC80; border-radius: 10px; background: transparent; }"
+        self.inactiveStyle = ".Device { border: 2px solid #483059; border-radius: 10px; background: transparent; }"
+        self.setFrameShape(QtWidgets.QFrame.Box)
+        self.setStyleSheet(self.inactiveStyle);
+    def setSelected(self, isSelected):
+        if isSelected :
+            self.setStyleSheet(self.activeStyle);
+        else :
+            self.setStyleSheet(self.inactiveStyle);
+
+
