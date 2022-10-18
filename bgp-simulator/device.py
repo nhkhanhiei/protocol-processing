@@ -8,9 +8,9 @@ from PySide6 import QtGui
 class Device(QtWidgets.QLabel):
     def __init__(self, parent, x, y, pixmap):
         super().__init__(parent)
-#        self.frame = QtWidgets.QFrame(parent)
-        self.setMinimumSize(80, 80)
-#        self.label = QtWidgets.QLabel(parent)
+        iconSize = 80
+        borderWidth = 2
+        self.setMinimumSize(iconSize + borderWidth, iconSize + borderWidth)
         self.setPixmap(pixmap)
 #        self.setFrameShape(QtWidgets.QFrame.Panel)
         self.setLineWidth(3)
