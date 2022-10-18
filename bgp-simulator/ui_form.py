@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QLabel,
-    QMainWindow, QMenuBar, QScrollArea, QSizePolicy,
-    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGroupBox, QHBoxLayout,
+    QLabel, QMainWindow, QMenuBar, QScrollArea,
+    QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -73,6 +74,9 @@ class Ui_MainWindow(object):
         self.label_2.setGeometry(QRect(0, 0, 111, 20))
         self.label_2.setFont(font)
         self.label_2.setStyleSheet(u"color: #eeeeee")
+        self.label_2.setFrameShape(QFrame.NoFrame)
+        self.label_2.setFrameShadow(QFrame.Plain)
+        self.label_2.setLineWidth(5)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
         self.horizontalLayout.addWidget(self.scrollArea)
@@ -102,7 +106,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.widget_4)
 
-        self.verticalLayout.setStretch(0, 3)
+        self.verticalLayout.setStretch(0, 5)
         self.verticalLayout.setStretch(1, 1)
 
         self.horizontalLayout.addWidget(self.groupBox)
