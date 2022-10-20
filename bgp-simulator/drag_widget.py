@@ -22,6 +22,7 @@ class DragWidget(QFrame):
     def __init__(self, parent, controller):
         super().__init__(parent)
         self.controller = controller
+        self.draggedProperties = {}
         self.setFrameStyle(QFrame.Sunken | QFrame.StyledPanel)
         self.setAcceptDrops(True)
         self._createIcon(10, 10, 'images/pc.png', self)
@@ -52,18 +53,14 @@ class DragWidget(QFrame):
 
             pixmap = QPixmap()
             offset = QPoint()
+            properties = self.draggedProperties
+            self.draggedProperties = {}
             dataStream >> pixmap >> offset
 
             newPoint = event.position().toPoint() - offset
-            newIcon = Device(self, newPoint.x(), newPoint.y(), pixmap)
+            newIcon = Device.fromDropEvent(self, newPoint.x(), newPoint.y(), pixmap, properties)
             self.controller.setCurrentSelection(newIcon)
             newIcon.show()
-#            newIcon = QLabel(self)
-#            newIcon.setPixmap(pixmap)
-#            newPoint = event.position().toPoint() - offset
-#            newIcon.move(newPoint.x(), newPoint.y())
-
-#            newIcon.setAttribute(Qt.WA_DeleteOnClose)
 
             if event.source() == self :
                 event.setDropAction(Qt.MoveAction)
@@ -81,6 +78,8 @@ class DragWidget(QFrame):
             return
         pixmap = child.pixmap()
         itemData = QByteArray()
+        self.draggedProperties = child.properties
+
         dataStream = QDataStream(itemData, QIODevice.WriteOnly)
         dataStream << pixmap << QPoint(event.position().toPoint() - child.pos())
 
@@ -121,6 +120,7 @@ class DragBar(DragWidget) :
             return
         pixmap = child.pixmap()
         itemData = QByteArray()
+
         dataStream = QDataStream(itemData, QIODevice.WriteOnly)
         dataStream << pixmap << QPoint(event.position().toPoint() - child.pos())
 
