@@ -34,6 +34,7 @@ if __name__ == "__main__":
 
     ex.verticalLayout.replaceWidget(ex.widget_3, drawWidget)
     ex.verticalLayout.replaceWidget(ex.widget_4, drawBar)
+    ex.verticalLayout_2.removeWidget(ex.splitter)
 
     w.show()
     sys.exit(app.exec())

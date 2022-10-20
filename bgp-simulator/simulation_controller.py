@@ -20,5 +20,9 @@ class SimulationController(QtWidgets.QWidget):
                 self.currentSelection.setSelected(True)
             self.elementEditor.updateDisplay(device)
 
-    def configureCurrentSelection(self):
-        print("set something")
+    def configureCurrentSelection(self, key, updatedValue):
+        if self.currentSelection is not None:
+            self.currentSelection.properties[key] = updatedValue
+#            property = self.currentSelection.properties.get(key)
+#            if property is not None:
+#                property
