@@ -5,6 +5,11 @@ from PySide6 import QtQuick
 from PySide6 import QtGui
 import random
 
+class DeviceProperty():
+    def __init__(self, label, key, type):
+        self.label = label
+        self.key = key
+        self.type = type
 
 class Device(QtWidgets.QLabel):
     def __init__(self, parent, x, y, pixmap):
@@ -12,7 +17,7 @@ class Device(QtWidgets.QLabel):
         self.iconSize = 80
         self.borderWidth = 2
         self.deviceSize = self.iconSize + self.borderWidth
-        self.properties = { "name": "Router", "as_id": "AS" + str(random.randint(1, 500))}
+        self.properties = { "name": "Router", "as_id": "AS" + str(random.randint(1, 500)), "interfaces": "test"}
         self.setMinimumSize(self.deviceSize, self.deviceSize)
         self.setPixmap(pixmap)
         self.move(x,y)
