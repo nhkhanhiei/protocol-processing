@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QMainWindow,
-    QMenuBar, QScrollArea, QSizePolicy, QSplitter,
-    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+    QMenuBar, QPlainTextEdit, QScrollArea, QSizePolicy,
+    QSplitter, QStatusBar, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -37,51 +37,43 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(self.centralwidget)
         self.scrollArea.setObjectName(u"scrollArea")
+        sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        self.scrollArea.setSizePolicy(sizePolicy)
         self.scrollArea.setStyleSheet(u"background: #483059")
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
         self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 399, 627))
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
         sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setVerticalStretch(1)
         sizePolicy1.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
         self.scrollAreaWidgetContents.setSizePolicy(sizePolicy1)
         self.verticalLayout_2 = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.splitter = QSplitter(self.scrollAreaWidgetContents)
         self.splitter.setObjectName(u"splitter")
-        sizePolicy2 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        sizePolicy2.setHorizontalStretch(1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.splitter.sizePolicy().hasHeightForWidth())
         self.splitter.setSizePolicy(sizePolicy2)
-        self.splitter.setStyleSheet(u"max-height: 30px;")
         self.splitter.setOrientation(Qt.Vertical)
-        self.textEdit = QTextEdit(self.splitter)
-        self.textEdit.setObjectName(u"textEdit")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Maximum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
-        self.textEdit.setSizePolicy(sizePolicy3)
-        self.textEdit.setStyleSheet(u"background: #eeeeee;")
-        self.splitter.addWidget(self.textEdit)
-        self.textEdit_2 = QTextEdit(self.splitter)
-        self.textEdit_2.setObjectName(u"textEdit_2")
-        sizePolicy3.setHeightForWidth(self.textEdit_2.sizePolicy().hasHeightForWidth())
-        self.textEdit_2.setSizePolicy(sizePolicy3)
-        self.textEdit_2.setStyleSheet(u"background: #eeeeee;")
-        self.splitter.addWidget(self.textEdit_2)
+        self.plainTextEdit = QPlainTextEdit(self.splitter)
+        self.plainTextEdit.setObjectName(u"plainTextEdit")
+        self.plainTextEdit.setStyleSheet(u"max-height: 30; background: white")
+        self.splitter.addWidget(self.plainTextEdit)
+        self.plainTextEdit_2 = QPlainTextEdit(self.splitter)
+        self.plainTextEdit_2.setObjectName(u"plainTextEdit_2")
+        self.plainTextEdit_2.setStyleSheet(u"max-height: 30; background: white")
+        self.splitter.addWidget(self.plainTextEdit_2)
+        self.plainTextEdit_3 = QPlainTextEdit(self.splitter)
+        self.plainTextEdit_3.setObjectName(u"plainTextEdit_3")
+        self.plainTextEdit_3.setStyleSheet(u"max-height: 30; background: white")
+        self.splitter.addWidget(self.plainTextEdit_3)
 
         self.verticalLayout_2.addWidget(self.splitter)
 
-        self.widget = QWidget(self.scrollAreaWidgetContents)
-        self.widget.setObjectName(u"widget")
-
-        self.verticalLayout_2.addWidget(self.widget)
-
-        self.verticalLayout_2.setStretch(0, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
         self.horizontalLayout.addWidget(self.scrollArea)
@@ -103,11 +95,11 @@ class Ui_MainWindow(object):
 
         self.widget_4 = QWidget(self.groupBox)
         self.widget_4.setObjectName(u"widget_4")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.widget_4.sizePolicy().hasHeightForWidth())
-        self.widget_4.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.widget_4.sizePolicy().hasHeightForWidth())
+        self.widget_4.setSizePolicy(sizePolicy3)
 
         self.verticalLayout.addWidget(self.widget_4)
 
@@ -134,18 +126,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">asdasdsadsdadsa</p></body></html>", None))
-        self.textEdit_2.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">asdasdsadsdadsa</p></body></html>", None))
         self.groupBox.setTitle("")
     # retranslateUi
 
