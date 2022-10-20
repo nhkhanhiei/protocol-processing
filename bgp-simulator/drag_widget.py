@@ -19,20 +19,12 @@ class DragWidget(QFrame):
         newIcon.show()
         return newIcon
 
-    def __init__(self, parent):
+    def __init__(self, parent, controller):
         super().__init__(parent)
-        self.currentSelection = None
+        self.controller = controller
         self.setFrameStyle(QFrame.Sunken | QFrame.StyledPanel)
         self.setAcceptDrops(True)
         self._createIcon(10, 10, 'images/pc.png', self)
-
-    def setCurrentSelection(self, device):
-        if self.currentSelection is not device :
-            if self.currentSelection is not None:
-                self.currentSelection.setSelected(False)
-            self.currentSelection = device
-            if self.currentSelection is not None:
-                self.currentSelection.setSelected(True)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasFormat("application/x-dnditemdata") :
@@ -64,7 +56,7 @@ class DragWidget(QFrame):
 
             newPoint = event.position().toPoint() - offset
             newIcon = Device(self, newPoint.x(), newPoint.y(), pixmap)
-            self.setCurrentSelection(newIcon)
+            self.controller.setCurrentSelection(newIcon)
             newIcon.show()
 #            newIcon = QLabel(self)
 #            newIcon.setPixmap(pixmap)
@@ -83,7 +75,7 @@ class DragWidget(QFrame):
     def mousePressEvent(self, event):
         child = self.childAt(event.position().toPoint())
 
-        self.setCurrentSelection(child)
+        self.controller.setCurrentSelection(child)
 
         if not child or not child.pixmap() :
             return
@@ -115,8 +107,8 @@ class DragWidget(QFrame):
 
 class DragBar(DragWidget) :
 
-    def __init__(self, parent) :
-        super().__init__(parent)
+    def __init__(self, parent, controller) :
+        super().__init__(parent, controller)
         self.setMinimumSize(80,100)
         self.setStyleSheet(u"background: rgb(145, 155, 155)")
         self.setAcceptDrops(False)

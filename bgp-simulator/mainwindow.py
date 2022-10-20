@@ -9,6 +9,8 @@ from PySide6.QtWidgets import QApplication, QWidget, QMainWindow, QHBoxLayout, Q
 #     pyside2-uic form.ui -o ui_form.py
 from ui_form import Ui_MainWindow
 from drag_widget import DragWidget, DragBar
+from simulation_controller import SimulationController
+from element_editor import ElementEditor
 
 class Widget(QWidget):
     def __init__(self, parent=None):
@@ -23,11 +25,15 @@ if __name__ == "__main__":
     w = QMainWindow()
     ex.setupUi(w)
 
-    drawWidget = DragWidget(ex.groupBox)
-    drawBar = DragBar(ex.groupBox)
+    controller = SimulationController()
+    drawWidget = DragWidget(ex.groupBox, controller)
+    drawBar = DragBar(ex.groupBox, controller)
+
     ex.verticalLayout.replaceWidget(ex.widget_3, drawWidget)
     ex.verticalLayout.replaceWidget(ex.widget_4, drawBar)
 
+    elementEditor = ElementEditor(ex.scrollAreaWidgetContents)
+    ex.verticalLayout_2.addWidget(elementEditor)
 
     w.show()
     sys.exit(app.exec())
