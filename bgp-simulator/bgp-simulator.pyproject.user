@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 8.0.1, 2022-10-18T07:05:43. -->
+<!-- Written by QtCreator 8.0.1, 2022-10-19T21:24:14. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -203,7 +203,58 @@
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator</value>
    </valuemap>
-   <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">4</value>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.4">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">simulation_controller.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator/simulation_controller.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator/simulation_controller.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">\\wsl.localhost\Ubuntu-22.04\home\spk\protocol-processing\bgp-simulator\simulation_controller.py</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.5">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">element_editor.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator/element_editor.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator/element_editor.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">\\wsl.localhost\Ubuntu-22.04\home\spk\protocol-processing\bgp-simulator\element_editor.py</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.6">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">sidebar.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator/sidebar.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator/sidebar.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">\\wsl.localhost\Ubuntu-22.04\home\spk\protocol-processing\bgp-simulator\sidebar.py</value>
+    <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">//wsl.localhost/Ubuntu-22.04/home/spk/protocol-processing/bgp-simulator</value>
+   </valuemap>
+   <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">7</value>
   </valuemap>
  </data>
  <data>

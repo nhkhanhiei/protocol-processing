@@ -1,3 +1,3 @@
 {
-    "files": ["mainwindow.py","images/house.png","images/pc.png","form.ui","images/car.png","images/boat.png","images/router.png","drag_widget.py","ui_form.py","device.py"]
+    "files": ["images/router.png","form.ui","images/pc.png","images/car.png","images/boat.png","ui_form.py","images/house.png","simulation_controller.py","sidebar.py","drag_widget.py","mainwindow.py","device.py","element_editor.py","playground.ui"]
 }
