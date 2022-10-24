@@ -141,13 +141,11 @@ class DragWidget(QFrame):
         drag.setPixmap(tempPixmap)
         drag.setHotSpot(event.position().toPoint() - child.pos())
 
-        drag.exec(Qt.MoveAction)
-
-#        if drag.exec(Qt.MoveAction) == Qt.MoveAction :
-#            child.hide()
-#        else :
-#            child.show()
-#            child.setPixmap(pixmap)
+        if drag.exec(Qt.MoveAction) == Qt.MoveAction :
+            child.show()
+        else :
+            child.show()
+            child.setPixmap(pixmap)
 
 class DragBar(QFrame) :
 
