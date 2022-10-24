@@ -5,27 +5,59 @@ from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QDrag,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPicture, QPixmap, QRadialGradient, QTransform)
+    QPalette, QPen, QPicture, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGraphicsView, QHBoxLayout, QLabel,
     QMainWindow, QMenuBar, QScrollArea, QSizePolicy,
     QStatusBar, QTextEdit, QWidget, QFrame)
 from device import Device
+from simulation_controller import VisualWire
 
 
 class DragWidget(QFrame):
-    def _createIcon(self, x, y, image, parent) :
+    def _createDevice(self, x, y, image, parent) :
         newPixmap = QPixmap(image)
-        newIcon = Device(parent, x, y, newPixmap)
-        newIcon.show()
-        return newIcon
+        newDevice = Device(parent, x, y, newPixmap)
+        newDevice.show()
+        return newDevice
+
+    def _updateWireNetwork(self) :
+
+        wires = self.controller.getWires()
+
+        newPicture = QImage(self.parent.width(), self.parent.height(), QImage.Format_ARGB32)
+        newPicture.fill(QColor(0,0,0,0))
+        painter = QPainter()
+        painter.begin(newPicture)
+        painter.setPen(QPen(Qt.black, 2, Qt.DashDotLine, Qt.RoundCap));
+
+        for wire in wires:
+
+            x1 = wire.device1.x + (wire.device1.width() / 2)
+            y1 = wire.device1.y + (wire.device1.height() / 2)
+            x2 = wire.device2.x + (wire.device2.width() / 2)
+            y2 = wire.device2.y + (wire.device2.height() / 2)
+            painter.drawLine(x1, y1, x2, y2)
+
+        painter.end()
+        self.backgroundCanvas.setPixmap(QPixmap.fromImage(newPicture))
+        self.backgroundCanvas.hide()
+        self.backgroundCanvas.show()
 
     def __init__(self, parent, controller):
         super().__init__(parent)
+        self.parent = parent
+        self.backgroundCanvas = QLabel(self)
+        self.backgroundCanvas.setMinimumSize(parent.height(), parent.width())
+
         self.controller = controller
         self.draggedProperties = {}
+        self.draggedDevice = None
         self.setFrameStyle(QFrame.Sunken | QFrame.StyledPanel)
         self.setAcceptDrops(True)
-        self._createIcon(10, 10, 'images/pc.png', self)
+        device1 = self._createDevice(160, 140, 'images/router.png', self)
+        device2 = self._createDevice(600, 380, 'images/router.png', self)
+        wires = [VisualWire(device1, device2)]
+        controller.setWires(wires)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasFormat("application/x-dnditemdata") :
@@ -45,6 +77,7 @@ class DragWidget(QFrame):
                 event.acceptProposedAction()
         else :
             event.ignore()
+
     def dropEvent(self, event):
 
         if event.mimeData().hasFormat("application/x-dnditemdata") :
@@ -53,14 +86,25 @@ class DragWidget(QFrame):
 
             pixmap = QPixmap()
             offset = QPoint()
+
             properties = self.draggedProperties
             self.draggedProperties = {}
+
+            device = self.draggedDevice
+            self.draggedDevice = None
+
             dataStream >> pixmap >> offset
 
             newPoint = event.position().toPoint() - offset
-            newIcon = Device.fromDropEvent(self, newPoint.x(), newPoint.y(), pixmap, properties)
-            self.controller.setCurrentSelection(newIcon)
-            newIcon.show()
+
+            if device is not None :
+                device.setPosition(newPoint.x(), newPoint.y())
+            else :
+                newDevice = Device.fromDropEvent(self, newPoint.x(), newPoint.y(), pixmap, properties)
+                self.controller.setCurrentSelection(newDevice)
+                newDevice.show()
+
+            self._updateWireNetwork()
 
             if event.source() == self :
                 event.setDropAction(Qt.MoveAction)
@@ -69,20 +113,19 @@ class DragWidget(QFrame):
                 event.acceptProposedAction()
         else :
             event.ignore()
+
     def mousePressEvent(self, event):
         child = self.childAt(event.position().toPoint())
-
-        self.controller.setCurrentSelection(child)
-
-        if not child or not child.pixmap() :
+        if not child or not child.pixmap() or not hasattr(child, 'properties') :
             return
+        self.controller.setCurrentSelection(child)
         pixmap = child.pixmap()
         itemData = QByteArray()
         self.draggedProperties = child.properties
+        self.draggedDevice = child
 
         dataStream = QDataStream(itemData, QIODevice.WriteOnly)
         dataStream << pixmap << QPoint(event.position().toPoint() - child.pos())
-
 
         tempPixmap = QPixmap(pixmap)
         painter = QPainter()
@@ -98,21 +141,29 @@ class DragWidget(QFrame):
         drag.setPixmap(tempPixmap)
         drag.setHotSpot(event.position().toPoint() - child.pos())
 
-        if drag.exec(Qt.MoveAction) == Qt.MoveAction :
-            child.close()
-        else :
-            child.show()
-            child.setPixmap(pixmap)
+        drag.exec(Qt.MoveAction)
 
-class DragBar(DragWidget) :
+#        if drag.exec(Qt.MoveAction) == Qt.MoveAction :
+#            child.hide()
+#        else :
+#            child.show()
+#            child.setPixmap(pixmap)
 
-    def __init__(self, parent, controller) :
-        super().__init__(parent, controller)
+class DragBar(QFrame) :
+
+    def _createDevice(self, x, y, image, parent) :
+        newPixmap = QPixmap(image)
+        newDevice = Device(parent, x, y, newPixmap)
+        newDevice.show()
+        return newDevice
+
+    def __init__(self, parent) :
+        super().__init__(parent)
         self.setMinimumSize(80,100)
         self.setStyleSheet(u"background: rgb(145, 155, 155)")
         self.setAcceptDrops(False)
-        self._createIcon(10, 10, 'images/pc.png', self)
-        self._createIcon(120, 10, 'images/router.png', self)
+        self._createDevice(10, 10, 'images/pc.png', self)
+        self._createDevice(120, 10, 'images/router.png', self)
 
     def mousePressEvent(self, event):
         child = self.childAt(event.position().toPoint())
