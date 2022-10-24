@@ -1,3 +1,3 @@
 {
-    "files": ["images/router.png","form.ui","images/pc.png","images/car.png","images/boat.png","ui_form.py","images/house.png","simulation_controller.py","sidebar.py","drag_widget.py","mainwindow.py","device.py","element_editor.py","playground.ui"]
+    "files": ["images/router.png","playground.ui","form.ui","images/pc.png","mainwindow.py","device.py","drag_widget.py","lib/main.py","lib/interface.py","simulation_controller.py","lib/router.py","lib/wire.py","ui_form.py","images/house.png","images/boat.png","images/car.png","element_editor.py"]
 }
