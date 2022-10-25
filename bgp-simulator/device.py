@@ -20,7 +20,7 @@ class Device(QtWidgets.QLabel):
         self.y = y
 
         self.deviceSize = self.iconSize + self.borderWidth
-        self.properties = { "name": "Router", "as_id": "AS" + str(random.randint(1, 500)), "interfaces": "test"}
+        self.properties = { "name": "Router", "as_id": "AS" + str(random.randint(1, 500)), "interfaces": []}
         self.setMinimumSize(self.deviceSize, self.deviceSize)
         self.setPixmap(pixmap)
         self.move(x,y)
