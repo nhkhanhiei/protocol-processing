@@ -4,6 +4,7 @@ from PySide6 import QtWidgets
 from PySide6 import QtQuick
 from PySide6 import QtGui
 import random
+from simulation_controller import VisualInterface
 
 class DeviceProperty():
     def __init__(self, label, key, type):
@@ -51,3 +52,5 @@ class Device(QtWidgets.QLabel):
         self.y = y
         self.move(x,y)
 
+    def addNewEmptyInterface(self):
+        self.properties['interfaces'].append(VisualInterface('','','', self))

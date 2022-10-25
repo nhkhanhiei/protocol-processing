@@ -30,6 +30,8 @@ if __name__ == "__main__":
     controller.setElementEditor(elementEditor)
 
     drawWidget = DragWidget(ex.groupBox, controller)
+    controller.setDrawWidget(drawWidget)
+
     drawBar = DragBar(ex.groupBox)
 
     ex.verticalLayout.replaceWidget(ex.widget_3, drawWidget)

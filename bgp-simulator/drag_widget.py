@@ -54,9 +54,7 @@ class DragWidget(QFrame):
         self.draggedDevice = None
         self.setFrameStyle(QFrame.Sunken | QFrame.StyledPanel)
         self.setAcceptDrops(True)
-        device1 = self._createDevice(160, 140, 'images/router.png', self)
-        device2 = self._createDevice(600, 380, 'images/router.png', self)
-        wires = [VisualWire(device1, device2)]
+        wires = []
         controller.setWires(wires)
 
     def dragEnterEvent(self, event):
@@ -68,6 +66,7 @@ class DragWidget(QFrame):
                 event.acceptProposedAction()
         else :
             event.ignore()
+
     def dragMoveEvent(self, event):
         if event.mimeData().hasFormat("application/x-dnditemdata") :
             if event.source() == self :

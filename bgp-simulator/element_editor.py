@@ -74,8 +74,7 @@ class InterfaceEditor(QtWidgets.QWidget):
             return None
 
     def _addInterface(self):
-        currentSelection = self.controller.currentSelection
-        currentSelection.properties['interfaces'].append(VisualInterface('','','', currentSelection))
+        self.controller.currentSelection.addNewEmptyInterface()
         self.interfaceCount = len(self._getInterfaces())
         self._updateForm()
 
