@@ -31,6 +31,10 @@ class DragWidget(QFrame):
         painter.setPen(QPen(Qt.black, 2, Qt.DashDotLine, Qt.RoundCap));
 
         for wire in wires:
+            if wire.interface1 is None or wire.interface2 is None:
+                wires.remove(wire)
+                del wire
+                continue
 
             x1 = wire.device1.x + (wire.device1.width() / 2)
             y1 = wire.device1.y + (wire.device1.height() / 2)

@@ -8,6 +8,13 @@ class VisualWire():
         self.interface2 = interface2
         self.device1 = interface1.router
         self.device2 = interface2.router
+    def disconnect_interface(self, interface):
+        if self.interface1 is not None and interface.source == self.interface1.source:
+            self.interface1 = None
+            self.device1 = None
+        elif self.interface2 is not None and interface.source == self.interface2.source:
+            self.interface2 = None
+            self.device2 = None
 
 class VisualInterface():
     def __init__(self, source, mask, destination, router = None):
@@ -28,27 +35,44 @@ class SimulationController(QtWidgets.QWidget):
         dest = self.interfaceMap[src].destination
 
         if dest == '' or dest not in self.interfaceMap:
+            wire1 = self.interfaceMap[src].wire
+            if wire1 is not None:
+                wire1.disconnect_interface(self.interfaceMap[src])
+                self.interfaceMap[src].wire = None
+                self.drawWidget._updateWireNetwork()
             return
 
         if src == self.interfaceMap[dest].destination:
             wire1 = self.interfaceMap[src].wire
             wire2 = self.interfaceMap[dest].wire
+
             if wire1 is None and wire2 is None:
-                self.wires.append(VisualWire(self.interfaceMap[src], self.interfaceMap[dest]))
+                newWire = VisualWire(self.interfaceMap[src], self.interfaceMap[dest])
+                self.wires.append(newWire)
+                self.interfaceMap[src].wire = newWire
+                self.interfaceMap[dest].wire = newWire
             else:
-                if wire1 is not None:
-                    if wire1.interface1.source == self.interfaceMap[src].source:
-                        wire1.interface2.wire = None
+                if wire1 is not None:                    
+                    if wire1.interface1 is not None and wire1.interface1.source == self.interfaceMap[src].source:
+                        if wire1.interface2 is not None:
+                            wire1.disconnect_interface(wire1.interface2)
+                            wire1.interface2.wire = None
                         wire1.interface2 = self.interfaceMap[dest]
-                    elif wire1.interface2.source == self.interfaceMap[src].source:
-                        wire1.interface1.wire = None
+                    elif wire1.interface2 is not None and wire1.interface2.source == self.interfaceMap[src].source:
+                        if wire1.interface1 is not None:
+                            wire1.disconnect_interface(wire1.interface1)
+                            wire1.interface1.wire = None
                         wire1.interface1 = self.interfaceMap[dest]
                 elif wire2 is not None:
-                    if wire2.interface1.source == self.interfaceMap[src].source:
-                        wire2.interface2.wire =  None
+                    if wire2.interface1 is not None and wire2.interface1.source == self.interfaceMap[src].source:
+                        if wire2.interface2 is not None:
+                            wire2.disconnect_interface(wire2.interface2)
+                            wire2.interface2.wire =  None
                         wire2.interface2 = self.interfaceMap[dest]
-                    elif wire2.interface2.source == self.interfaceMap[src].source:
-                        wire2.interface1.wire =  None
+                    elif wire2.interface2 is not None and wire2.interface2.source == self.interfaceMap[src].source:
+                        if wire2.interface1 is not None:
+                            wire2.disconnect_interface(wire2.interface1)
+                            wire2.interface1.wire =  None
                         wire2.interface1 = self.interfaceMap[dest]
             self.drawWidget._updateWireNetwork()
 
