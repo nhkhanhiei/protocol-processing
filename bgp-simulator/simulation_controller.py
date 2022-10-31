@@ -15,6 +15,14 @@ class VisualWire():
         elif self.interface2 is not None and interface.source == self.interface2.source:
             self.interface2 = None
             self.device2 = None
+    def disconnect_all(self):
+        self.interface1.wire = None
+        self.interface2.wire = None
+        self.interface1 = None
+        self.interface2 = None
+        self.device1 = None
+        self.device2 = None
+        del self
 
 class VisualInterface():
     def __init__(self, source, mask, destination, router = None):
@@ -37,8 +45,7 @@ class SimulationController(QtWidgets.QWidget):
         if dest == '' or dest not in self.interfaceMap:
             wire1 = self.interfaceMap[src].wire
             if wire1 is not None:
-                wire1.disconnect_interface(self.interfaceMap[src])
-                self.interfaceMap[src].wire = None
+                wire1.disconnect_all()
                 self.drawWidget._updateWireNetwork()
             return
 
