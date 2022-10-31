@@ -111,8 +111,11 @@ class SimulationController(QtWidgets.QWidget):
                     elif subkey == "destination":
                         self._updateInterfaceConnection(property.source)
 
-    def getWires(self) :
+    def getWires(self):
         return self.wires
 
-    def setWires(self, wires) :
+    def setWires(self, wires):
         self.wires = wires
+
+    def runSimulation(self):
+        return
