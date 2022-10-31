@@ -115,7 +115,7 @@ class InterfaceEditor(QtWidgets.QWidget):
                 self.splitter.addWidget(rowContainer)
 
         button = QtWidgets.QPushButton('Add New Interface', self.splitter)
-        button.setStyleSheet(u"background: rgb(145, 131, 155);")
+        button.setStyleSheet(u"background: rgb(145, 131, 155); height: 32px; border-radius: 8px; margin: 0 4px;")
         button.pressed.connect(lambda : self._addInterface())
         self.splitter.addWidget(button)
         self.parent.insertWidget(2, self.splitter)
@@ -157,6 +157,9 @@ class ElementEditor(QtWidgets.QWidget):
                self.formElements[propKey] = textField
                self.splitter.addWidget(textField)
 
+        button = QtWidgets.QPushButton('Start Simulation', self.splitter)
+        button.setStyleSheet(u"background: #1DDC80; height: 32px; border-radius: 8px;")
+        button.pressed.connect(lambda : self.controller.runSimulation())
         self.filler = QtWidgets.QWidget()
         self.splitter.addWidget(self.filler)
         layout.addWidget(self.splitter)
