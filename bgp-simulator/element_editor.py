@@ -139,6 +139,9 @@ class ElementEditor(QtWidgets.QWidget):
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
 
+        self.displayProperties(parent, layout, controller)
+
+    def displayProperties(self, parent, layout, controller):
         self.splitter = QtWidgets.QSplitter(parent)
         self.splitter.setObjectName(u"splitter")
         self.splitter.setOrientation(QtCore.Qt.Vertical)
