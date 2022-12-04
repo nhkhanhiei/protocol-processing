@@ -1,9 +1,9 @@
 # This Python file uses the following encoding: utf-8
-from PyQt6 import QtCore
-from PyQt6 import QtWidgets
-from PyQt6 import QtQuick
+from PySide6 import QtCore
+from PySide6 import QtWidgets
+from PySide6 import QtQuick
 from PySide6 import QtGui
-from element_editor import TextFieldWithLabel
+from textfield_with_label import TextFieldWithLabel
 
 class RoutingTableEditor(QtWidgets.QWidget):
 
@@ -16,37 +16,37 @@ class RoutingTableEditor(QtWidgets.QWidget):
         self.updateSelection = updateSelection
 
         self.splitter = QtWidgets.QSplitter(parent)
-        self.splitter.setObjectName(u"splitter")
+        self.splitter.setObjectName(u"routing_table_splitter")
         self.splitter.setOrientation(QtCore.Qt.Vertical)
         self.splitter.setChildrenCollapsible(False)
         self.splitter.setOpaqueResize(False)
 
         self.label = QtWidgets.QLabel()
-        self.label.setObjectName(u"label")
+        self.label.setObjectName(u"routing_table_label")
         self.label.setGeometry(QtCore.QRect(0, 0, 63, 20))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.label.setText("Interfaces")
+        self.label.setText("Routing Table")
         self.label.setFont(font)
         self.label.setStyleSheet(u"color: #eeeeee; max-height: 16px;")
 
         self._updateForm()
 
-    def _getInterfaces(self):
+    def _getRoutingTableEntries(self):
         if self.controller.currentSelection is not None:
-            return self.controller.currentSelection.properties['interfaces']
+            return self.controller.currentSelection.properties['routing_table']
         else:
             return None
 
-    def _addInterface(self):
+    def _addRoutingTableEntry(self):
         self.controller.currentSelection.addNewEmptyInterface()
-        self.interfaceCount = len(self._getInterfaces())
+        self.interfaceCount = len(self._getRoutingTableEntries())
         self._updateForm()
 
     def _updateForm(self):
 
         newSplitter = QtWidgets.QSplitter(self.splitter.parent())
-        newSplitter.setObjectName(u"splitter")
+        newSplitter.setObjectName(u"routing_table_splitter")
         newSplitter.setOrientation(QtCore.Qt.Vertical)
         newSplitter.setChildrenCollapsible(False)
         newSplitter.setOpaqueResize(False)
@@ -56,7 +56,7 @@ class RoutingTableEditor(QtWidgets.QWidget):
 
         self.splitter.addWidget(self.label)
 
-        interfaces = self._getInterfaces()
+        interfaces = self._getRoutingTableEntries()
 
         if interfaces is not None:
             for index, interface in enumerate(interfaces, start=0):
@@ -79,9 +79,9 @@ class RoutingTableEditor(QtWidgets.QWidget):
                 rowContainer.addWidget(textField3)
                 self.splitter.addWidget(rowContainer)
 
-        button = QtWidgets.QPushButton('Add New Interface', self.splitter)
+        button = QtWidgets.QPushButton('Add New Entry', self.splitter)
         button.setStyleSheet(u"background: rgb(145, 131, 155); height: 32px; border-radius: 8px; margin: 0 4px;")
-        button.pressed.connect(lambda : self._addInterface())
+        button.pressed.connect(lambda : self._addRoutingTableEntry())
         self.splitter.addWidget(button)
         self.parent.insertWidget(2, self.splitter)
 
