@@ -1,3 +1,3 @@
 {
-    "files": ["images/car.png","lib/main.py","lib/interface.py","simulation_controller.py","images/house.png","mainwindow.py","images/router.png","drag_widget.py","lib/router.py","images/boat.png","playground.ui","element_editor.py","lib/wire.py","images/pc.png","ui_form.py","form.ui","device.py","RoutingTableEditor.py"]
+    "files": ["images/router.png","form.ui","images/boat.png","simulation_controller.py","lib/wire.py","ui_form.py","images/pc.png","images/car.png","playground.ui","drag_widget.py","element_editor.py","images/house.png","lib/main.py","routing_table_editor.py","lib/router.py","device.py","lib/interface.py","mainwindow.py","textfield_with_label.py"]
 }
