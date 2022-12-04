@@ -4,42 +4,8 @@ from PySide6 import QtWidgets
 from PySide6 import QtGui
 from device import DeviceProperty
 from simulation_controller import VisualInterface
-
-class TextFieldWithLabel(QtWidgets.QWidget):
-    def __init__(self, label, key, parent, element, onChange, isArrayProp = False, index = None, arrayKey = None):
-        super().__init__(parent)
-        self.verticalLayout = QtWidgets.QVBoxLayout(self)
-
-        self.lineEdit = QtWidgets.QLineEdit()
-        self.lineEdit.setObjectName(u"textEdit")
-        self.lineEdit.setGeometry(QtCore.QRect(0, 30, 371, 31))
-        self.lineEdit.setStyleSheet(u"background: #eeeeee; max-height: 24px;")
-        if isArrayProp:
-            self.lineEdit.textEdited.connect(lambda newText: onChange(arrayKey, newText, index, key))
-        else:
-            self.lineEdit.textEdited.connect(lambda newText: onChange(key, newText))
-
-        self.label = QtWidgets.QLabel()
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QtCore.QRect(0, 0, 63, 20))
-
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.label.setText(label)
-        self.label.setFont(font)
-        self.label.setStyleSheet(u"color: #eeeeee; max-height: 20px;")
-
-        self.verticalLayout.addWidget(self.label)
-        self.verticalLayout.addWidget(self.lineEdit)
-
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(1)
-        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
-        self.setSizePolicy(sizePolicy)
-
-    def setFieldValue(self, value):
-        self.lineEdit.setText(value)
+from textfield_with_label import TextFieldWithLabel
+from routing_table_editor import RoutingTableEditor
 
 class InterfaceEditor(QtWidgets.QWidget):
     def __init__(self, parent, controller, updateSelection):
@@ -51,13 +17,13 @@ class InterfaceEditor(QtWidgets.QWidget):
         self.updateSelection = updateSelection
 
         self.splitter = QtWidgets.QSplitter(parent)
-        self.splitter.setObjectName(u"splitter")
+        self.splitter.setObjectName(u"interface_splitter")
         self.splitter.setOrientation(QtCore.Qt.Vertical)
         self.splitter.setChildrenCollapsible(False)
         self.splitter.setOpaqueResize(False)
 
         self.label = QtWidgets.QLabel()
-        self.label.setObjectName(u"label")
+        self.label.setObjectName(u"interface_label")
         self.label.setGeometry(QtCore.QRect(0, 0, 63, 20))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -81,7 +47,7 @@ class InterfaceEditor(QtWidgets.QWidget):
     def _updateForm(self):
 
         newSplitter = QtWidgets.QSplitter(self.splitter.parent())
-        newSplitter.setObjectName(u"splitter")
+        newSplitter.setObjectName(u"interface_splitter")
         newSplitter.setOrientation(QtCore.Qt.Vertical)
         newSplitter.setChildrenCollapsible(False)
         newSplitter.setOpaqueResize(False)
@@ -130,18 +96,19 @@ class ElementEditor(QtWidgets.QWidget):
         self.controller = controller
         self.formElements = {}
         self.properties = [
-                            DeviceProperty("Name", "name", "text"),
-                            DeviceProperty("AS ID", "as_id", "text"),
-                            DeviceProperty("Interfaces", "interfaces", "interface"),
+                            DeviceProperty(label="Name", key="name", type="text"),
+                            DeviceProperty(label="AS ID", key="as_id", type="text"),
+                            DeviceProperty(label="Routing Table", key="routing_table", type="routing_table"),
+                            DeviceProperty(label="Interfaces", key="interfaces", type="interface"),
                           ]
 
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
 
-        self.displayProperties(parent, layout, controller)
+        self._displayProperties(parent, layout, controller)
 
-    def displayProperties(self, parent, layout, controller):
+    def _displayProperties(self, parent, layout, controller):
         self.splitter = QtWidgets.QSplitter(parent)
         self.splitter.setObjectName(u"splitter")
         self.splitter.setOrientation(QtCore.Qt.Vertical)
@@ -151,10 +118,15 @@ class ElementEditor(QtWidgets.QWidget):
         for prop in self.properties:
            propKey = prop.key
            propLabel = prop.label
+           print(propKey)
            if prop.type == "interface":
                interfaceEditor = InterfaceEditor(self.splitter, controller, self.updateSelectionPropArray)
                self.formElements[propKey] = interfaceEditor
                self.splitter.addWidget(interfaceEditor)
+           elif prop.type == "routing_table":
+               routingTableEditor = RoutingTableEditor(self.splitter, controller, self.updateSelectionPropArray)
+               self.formElements[propKey] = routingTableEditor
+               self.splitter.addWidget(routingTableEditor)
            else :
                textField = TextFieldWithLabel(propLabel, propKey, self.splitter, controller.currentSelection, self.updateSelection)
                self.formElements[propKey] = textField
