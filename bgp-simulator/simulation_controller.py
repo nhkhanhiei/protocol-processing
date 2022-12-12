@@ -38,6 +38,7 @@ class SimulationController(QtWidgets.QWidget):
         self.elementEditor = None
         self.wires = []
         self.interfaceMap = {}
+        self.routers = {}
 
     def _updateInterfaceConnection(self, src):
         dest = self.interfaceMap[src].destination
