@@ -113,11 +113,13 @@ class SimulationController(QtWidgets.QWidget):
 
                 if key == "interfaces":
                     if subkey == "source":
-                        if len(prevValue) > 0:
+                        if len(prevValue) > 0 and prevValue in self.interfaceMap.keys():
                             self.interfaceMap.pop(prevValue)
                         self.interfaceMap[updatedValue] = property
                         self._updateInterfaceConnection(updatedValue)
                     elif subkey == "destination":
+                        if len(property.source) > 0 and property.source not in self.interfaceMap.keys():
+                            self.interfaceMap[property.source] = property
                         self._updateInterfaceConnection(property.source)
 
     def getWires(self):
