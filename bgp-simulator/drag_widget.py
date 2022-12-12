@@ -36,12 +36,6 @@ class DragWidget(QFrame):
                 del wire
                 continue
 
-            x1 = wire.device1.x + (wire.device1.width() / 2)
-            y1 = wire.device1.y + (wire.device1.height() / 2)
-            x2 = wire.device2.x + (wire.device2.width() / 2)
-            y2 = wire.device2.y + (wire.device2.height() / 2)
-            painter.drawLine(x1, y1, x2, y2)
-
             if wire.device1 is not None and wire.device2 is not None:
                 x1 = wire.device1.x + (wire.device1.width() / 2)
                 y1 = wire.device1.y + (wire.device1.height() / 2)
