@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from PySide6 import QtCore
 from PySide6 import QtWidgets
+from lib.main import init
 
 class VisualWire():
     def __init__(self, interface1, interface2):
@@ -126,4 +127,5 @@ class SimulationController(QtWidgets.QWidget):
         self.wires = wires
 
     def runSimulation(self):
+        init(self.routers, self.wires, self.interfaceMap)
         return
