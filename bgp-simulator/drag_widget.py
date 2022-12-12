@@ -112,6 +112,7 @@ class DragWidget(QFrame):
             else :
                 newDevice = Device.fromDropEvent(self, newPoint.x(), newPoint.y(), pixmap, properties)
                 self.controller.setCurrentSelection(newDevice)
+                self.controller.routers[ newDevice.properties['as_id'] ] = newDevice
                 newDevice.show()
 
             self._updateWireNetwork()
