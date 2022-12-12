@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 8.0.1, 2022-12-04T15:21:30. -->
+<!-- Written by QtCreator 8.0.1, 2022-12-12T21:50:07. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -82,6 +82,8 @@
    </valuemap>
    <valuelist type="QVariantList" key="ProjectExplorer.Project.Environment">
     <value type="QString">#PYSIDE_DESIGNER_PLUGINS=.</value>
+    <value type="QString">WINDIR=C:\Windows</value>
+    <value type="QString">PROGRAMFILES=C:\Program Files</value>
    </valuelist>
   </valuemap>
  </data>
